@@ -21,14 +21,21 @@ elif komanda == 'lowercase':
 elif komanda == 'capitalize':
     print(fjalia.capitalize())
 elif komanda == 'inverse':
-    print(fjalia)
+    print(fjalia.swapcase())
 
 elif komanda == 'alternating':
-    a = 0
-    for x in range(a, len(fjalia), 1):
 
-        altered = fjalia.replace(fjalia[x],fjalia[x].upper())
-        print(x)
+    def to_alternating_case(fjalia):
+        res = ""
+        i = 0
+        for word in fjalia:
+            i += 1
+            if i % 2 == True:
+                res = res + word.lower()
+            else:
+                res = res + word.upper()
+        return res
 
-    print(altered)
+
+    print(to_alternating_case(fjalia))
 
