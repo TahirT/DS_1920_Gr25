@@ -56,6 +56,40 @@ def cipher_enkriptimi(mesazhi, vlera_qelsit):
             teksti_inkriptuar += table[rreshti][kolona]
 
     print("Mesazhi i inkriptuar: " + teksti_inkriptuar)
+def itr_numro(vlera_qelsit, mesazhi):
+    numruesi = 0
+    rezultati = ""
+
+ 
+    for i in range(26):
+        if vlera_qelsit + i > 90:
+            rezultati += chr(vlera_qelsit+(i-26))
+        else:
+            rezultati += chr(vlera_qelsit+i)
+
+  
+    for i in range(len(rezultati)):
+        if rezultati[i] == chr(mesazhi):
+            break
+        else:
+            numruesi += 1
+
+    return numruesi
+
+def cipher_dekriptimi(mesazhi, vlera_qelsit):
+    table = vigenere_table()
+    teksti_dekriptuar = ""
+
+    for i in range(len(mesazhi)):
+        if mesazhi[i] == chr(32):
+       
+            teksti_dekriptuar += " "
+        else:
+            
+            teksti_dekriptuar += chr(65 + itr_numro(ord(vlera_qelsit[i]), ord(mesazhi[i])))
+
+    print("Mesazhi i dekriptuar: {}".format(teksti_dekriptuar))
+
 
 
 def main():
@@ -68,7 +102,9 @@ def main():
 
     elif choice == 2:
         print("--Dekriptimi--")
-
+        print("--Dekriptimi--")
+        mesazhi, vlera_qelsit = mesazhi_qelsi()
+        cipher_dekriptimi(mesazhi, vlera_qelsit)
     else:
         print("Gabim ju lutem zgjidh njerin opsion: ")
 
