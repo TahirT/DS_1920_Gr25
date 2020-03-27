@@ -19,7 +19,7 @@ def mesazhi_qelsi():
                 j = 0
                 vlera_qelsit += qelsi[j]
                 j += 1
-    print(vlera_qelsit)
+   # print(vlera_qelsit)
     return mesazhi, vlera_qelsit
 
 def vigenere_table():
@@ -35,14 +35,27 @@ def vigenere_table():
                 table[rreshti].append(chr((rreshti+ 65) + kolona))
 
     # printimi i tabeles
-    for rreshti in table:
-        for kolona in rreshti:
-            print(kolona, end=" ")
-        print(end="\n")
+    # for rreshti in table:
+    #    for kolona in rreshti:
+    #       print(kolona, end=" ")
+    #  print(end="\n")
 
-def cipher_enkriptimi(message, mapped_key):
+    return table
+
+def cipher_enkriptimi(mesazhi, vlera_qelsit):
     table = vigenere_table()
+    teksti_inkriptuar = ""
 
+    for i in range(len(mesazhi)):
+        if mesazhi[i] == chr(32):
+            #injoron
+            teksti_inkriptuar += " "
+        else:
+            rreshti = ord(mesazhi[i]) - 65
+            kolona = ord(vlera_qelsit[i]) - 65
+            teksti_inkriptuar += table[rreshti][kolona]
+
+    print("Mesazhi i inkriptuar: " + teksti_inkriptuar)
 
 
 def main():
@@ -50,14 +63,14 @@ def main():
     choice = int(input("1.Enkriptimi\n2.Dekriptimi\n3.Zhgjidh(1 ,2): "))
     if choice == 1:
         print("--Enkriptimi--")
-        message, mapped_key = mesazhi_qelsi()
-        cipher_enkriptimi(message, mapped_key)
+        mesazhi, vlera_qelsit = mesazhi_qelsi()
+        cipher_enkriptimi(mesazhi, vlera_qelsit)
 
     elif choice == 2:
         print("--Dekriptimi--")
 
     else:
-        print("Gabim ju lutem zgjidh njrin opsion: ")
+        print("Gabim ju lutem zgjidh njerin opsion: ")
 
 
 if __name__ == "__main__":
