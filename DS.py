@@ -1,41 +1,31 @@
-
-
-#NE PROCES E TUTJE
-
+import Four_square_cipher
+import Vigenere
 import sys
+import Case
 
-print("Ju lutem vendosni njeren nga komanadat: uppercase, lowercase, capitalize, inverse, alternating")
-fjalia = input("Ne fillim vendosni nje fjali te qfardoshme:")
-print(fjalia)
-komanda = input("Tani vendos njeren nga komandat e dhena me larte:")
+def main():
+    print("Sheno cilin fajll do te ekzekutosh: ")
+    sys.argv = input("vendos emrin e fajllit:").upper()
+    if sys.argv == "VIGENERE" :
+        Vigenere.main()
 
-argumentet = ["uppercase","lowercase","capitalize","inverse","alternating"]
-if komanda in argumentet:
-    print("Ke zgjedhur komanden " + komanda + " nga lista " + str(argumentet) + "\nRezultati: ")
-else:
-    print("Gabim ,ju lutem vendosni nje komande valide!")
-if komanda == 'uppercase':
-    print(fjalia.upper())
-elif komanda == 'lowercase':
-    print(fjalia.lower())
-elif komanda == 'capitalize':
-    print(fjalia.capitalize())
-elif komanda == 'inverse':
-    print(fjalia.swapcase())
+    elif sys.argv == "FOUR_SQUARE_CIPHER":
+        Four_square_cipher.main()
 
-elif komanda == 'alternating':
+    elif sys.argv == "CASE":
+        Case.main()
 
-    def to_alternating_case(fjalia):
-        res = ""
-        i = 0
-        for word in fjalia:
-            i += 1
-            if i % 2 == True:
-                res = res + word.lower()
-            else:
-                res = res + word.upper()
-        return res
+    x = input("******Deshiron te provosh perseri: ").upper()
+    if x == 'YES':
+        main()
+    elif x == 'NO':
+        print("******Processi perfundoi*******")
+        exit()
 
+    else:
+        print("Vendos vlera valide ")
+        main()
 
-    print(to_alternating_case(fjalia))
+if __name__ == "__main__":
+    main()
 
