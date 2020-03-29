@@ -20,7 +20,7 @@ def main():
     elif komanda == 'LOWERCASE':
         print(fjalia.lower())
     elif komanda == 'CAPITALIZE':
-        print(fjalia.capitalize())
+        print(fjalia.title())
     elif komanda == 'INVERSE':
         print(fjalia.swapcase())
 
