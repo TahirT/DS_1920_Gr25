@@ -31,11 +31,18 @@ def main():
             CreateUser()
         else:
             print("----Procesi perfundoi-----")
+
     def CreateUser():
         listaUser = []
-        komanda = input("\nVendos Komanden: ")
-        user = komanda[12:]
+        while True:
+            komanda = input("\nVendos Komanden: ")
+            user = komanda[12:]
+            print(user)
+            if user.strip() != "":
+                break
+
         a = "" + user + ".xml"
+        b = "" + user + "pub.xml"
 
         if komanda[0:11].upper() == "CREATE-USER":
             if os.path.isfile(a):
@@ -49,12 +56,35 @@ def main():
                     user.write(qelesiPriv)
                     qelesi = "Eshte krijuar celesi privat 'keys/"+komanda[12:]+".xml'"
                     print(qelesi)
+                    user.close()
+
                 with open(b, "w+") as user:
                     user.write(qelesiPub)
                     qelesi1 = "Eshte krijuar celesi publik 'keys/" + komanda[12:] + ".pub.xml'"
                     print(qelesi1)
                     print(listaUser)
+                    user.close()
                     Provo()
+        
+        elif komanda[0:11].upper() == "DELETE-USER":
+            a = ""+ user +".xml"
+            b = ""+user+".pub.xml"
+            if os.path.isfile(b) and os.path.isfile(a):
+                os.remove(b)
+                os.remove(a)
+                
+                print("Eshte larguar\'" + a +"\' Celesi privat.")
+                print("Eshte larguar  \'"+b+"\' Celesi publik.")
+                Provo()
+
+            elif not (os.path.exists(a)) and os.path.exists(b):
+                os.remove(b)
+                print("Eshte larguar \'"+ b +"\' Celesi publik.")
+
+            else:
+                print("Celesi \'" + a + "\' nuk ekziston.")
+                Provo()
+
     CreateUser()
 
 if __name__=="__main__":
