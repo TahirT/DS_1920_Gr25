@@ -76,6 +76,9 @@ def main():
                 print("Eshte larguar\'" + a +"\' Celesi privat.")
                 print("Eshte larguar  \'"+b+"\' Celesi publik.")
                 Provo()
+            elif  os.path.exists(a) and not os.path.exists(b):
+                os.remove(a)
+                print("Eshte larguar\'"+ a +"\' Celesi privat.")
 
             elif not (os.path.exists(a)) and os.path.exists(b):
                 os.remove(b)
