@@ -3,6 +3,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 import os
 import os.path
+import pathlib
 os.chdir('Keys')
 from cryptography.hazmat.primitives import serialization as crypto_serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -67,28 +68,35 @@ def main():
                     Provo()
         
         elif komanda[0:11].upper() == "DELETE-USER":
-            a = ""+ user +".xml"
-            b = ""+user+".pub.xml"
-            if os.path.isfile(b) and os.path.isfile(a):
-                os.remove(b)
-                os.remove(a)
+            deleteUser(user)
+            
+    
+    def deleteUser(user):
+        a = ""+ user +".xml"
+        b = ""+user+".pub.xml"
+        if os.path.isfile(b) and os.path.isfile(a):
+            os.remove(b)
+            os.remove(a)
+            
+            print("Celesi privat\'" + a +"\' u fshi me sukses.")
+            print("Celesi publik \'"+b+"\' u fshi me sukses.")
+            Provo()
+            
+        elif os.path.exists(a) and not os.path.exists(b):
+            os.remove(a)
+            print("Celesi privat \'"+ a +"\' u fshi me sukses.")
+
+        elif not (os.path.exists(a)) and os.path.exists(b):
+            os.remove(b)
+            print("Celesi publik \'"+ b +"\' u fshi me sukses.")
+
+        else:
+            print("Celesi \'" + a + "\' nuk ekziston.")
+            Provo()
+
                 
-                print("Eshte larguar\'" + a +"\' Celesi privat.")
-                print("Eshte larguar  \'"+b+"\' Celesi publik.")
-                Provo()
-            elif  os.path.exists(a) and not os.path.exists(b):
-                os.remove(a)
-                print("Eshte larguar\'"+ a +"\' Celesi privat.")
-
-            elif not (os.path.exists(a)) and os.path.exists(b):
-                os.remove(b)
-                print("Eshte larguar \'"+ b +"\' Celesi publik.")
-
-            else:
-                print("Celesi \'" + a + "\' nuk ekziston.")
-                Provo()
-
     CreateUser()
+
 
 if __name__=="__main__":
     main()
