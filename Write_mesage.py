@@ -14,7 +14,6 @@ def main():
             try:
                 shtegu = komanda[2]
                 shtegu = shtegu[1:]
-                print(shtegu)
             except:
                 print("")
         except:
@@ -34,12 +33,14 @@ def main():
             try:
                 file = open("Keys/" + emri, "r")
                 if file.mode == "r":
-                    private_key = rsa.generate_private_key(
-                        public_exponent=65537,
-                        key_size=2048,
-                        backend=default_backend()
-                    )
 
+                    with open("Keys/key1.pem", 'rb') as key_file:
+                        private_key = serialization.load_pem_private_key(
+                            key_file.read(),
+                            password=None,
+                            backend=default_backend()
+
+                        )
                     public_key = private_key.public_key()
                     #konverton mesazhin ne bytes
                     arr = bytes(mesazhi, 'utf-8')
@@ -56,6 +57,9 @@ def main():
                     try:
                         file = open("Keys/"+shtegu, "a+")
                         file.write(str(ciphertext))
+                        file.write(emri)
+                        path = open("Keys/path.txt", "a+")
+                        path.write(str(private_key))
                         print("Mesazhi i enkriptuar u ruajt ne fajllin "+shtegu+".")
                         Provo()
                     except:
