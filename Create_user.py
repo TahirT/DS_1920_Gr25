@@ -12,8 +12,6 @@ import mysql.connector
 from mysql.connector import Error
 from mysql.connector import errorcode
 import hashlib
-import jwt
-from time import time
 
 from pip._vendor.distlib.compat import raw_input
 
@@ -100,7 +98,7 @@ def main():
 
         
         elif komanda[0:11].upper() == "DELETE-USER":
-            deleteUser(user)
+            deleteUser(username)
         else:
             print("Ju lutem Shenoni Komanden si duhet: P.sh:Create-user Filani")
 
@@ -158,13 +156,14 @@ def main():
     def deleteUser(user):
         a = ""+ user +".xml"
         b = ""+user+".pub.xml"
+        delete_User(user)
         if os.path.isfile(b) and os.path.isfile(a):
             os.remove(b)
             os.remove(a)
             
             print("Celesi privat\'" + a +"\' u fshi me sukses.")
             print("Celesi publik \'"+b+"\' u fshi me sukses.")
-            Provo()
+
             
         elif os.path.exists(a) and not os.path.exists(b):
             os.remove(a)
@@ -176,69 +175,31 @@ def main():
 
         else:
             print("Celesi \'" + a + "\' nuk ekziston.")
-            Provo()
 
-    def create_token(username, password, private):
 
-        data = {
-            'username': username,
-            'password': password,
-            'expr': time() + 12000
-        }
-        token = jwt.encode(data, private, algorithm='HS256').decode('utf-8')
-        return token
-
-    def login(username, password):
-
+        Provo()
+    def delete_User(username):
         try:
-            password = hashlib.sha512(password.encode("utf-8")).hexdigest()
+
             connection = mysql.connector.connect(host='localhost',
                                                  database='shemb',
                                                  user='root',
                                                  password='')
-            sql_select_Query = "select * from users where username = '{0}' AND password = '{1}'".format(username,
-                                                                                                        password)
+
+            mySql_insert_query = "DELETE from users_token where username = '{0}'".format(username)
+            mySql_insert_query1 = "DELETE from users where username = '{0}'".format(username)
             cursor = connection.cursor()
-            cursor.execute(sql_select_Query)
-            records = cursor.fetchall()
-            if cursor.rowcount > 0:
-                return [True, records]
-            else:
-                return [False]
+            cursor.execute(mySql_insert_query)
+            cursor.execute(mySql_insert_query1)
+            connection.commit()
+            cursor.close()
+            if (connection.is_connected()):
+                connection.close()
+            return True
 
-        except Error as e:
-            return [False]
+        except mysql.connector.Error as error:
+            return False
 
-    def insert_token(username, password, token):
-        try:
-            password = hashlib.sha512(password.encode("utf-8")).hexdigest()
-            connection = mysql.connector.connect(host='localhost',
-                                                 database='shemb',
-                                                 user='root',
-                                                 password='')
-            check = check_user(username)
-            if check:
-                sql_update_query = "Update users_token set token = '{2}' where username = '{0}' AND password = '{1}'".format(
-                    username, password, token)
-                cursor = connection.cursor()
-                cursor.execute(sql_update_query)
-                connection.commit()
-                cursor.close()
-                if (connection.is_connected()):
-                    connection.close()
-                return True
-            else:
-                mySql_insert_query = "insert into users_token VALUES('{0}','{1}','{2}')".format(username, password,
-                                                                                                token)
-                cursor = connection.cursor()
-                cursor.execute(mySql_insert_query)
-                connection.commit()
-                cursor.close()
-                if (connection.is_connected()):
-                    connection.close()
-                return True
-        except Error as e:
-            return [False]
 
     CreateUser()
 
