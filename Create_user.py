@@ -44,14 +44,14 @@ def main():
             komanda = input("\nVendos Komanden: ")
             user = komanda[12:]
             username = user
-            password = input("Enter Password : ")
+            password = input("Jepni fjalekalimin: ")
             if len(password) >= 6:
                 if password.isalpha() == False:
                     print()
             else:
                 print("Gabim: Fjalekalimi duhet te permbaje se paku nje numer ose simbol.")
                 Provo()
-            password2 = input("Re-Type Password : ")
+            password2 = input("Perserit fjalekalimin: ")
             while password != password2:
                 password = input("Enter Password : ")
                 password2 = input("Re-Type Password : ")
@@ -85,7 +85,7 @@ def main():
                 #-----------------------------------------------------------------------------------
                 if not check_user(username):
                     if insert_User(username, password, qelesiPub, qelesiPriv):
-                        print("[] Successfully Regstired")
+                        print("U Regjistrua me Sukses")
                         print("Username :", username)
                         print("Password :", password)
 
@@ -94,7 +94,7 @@ def main():
                         print("Something error")
 
                 else:
-                    print("[-] Sorry , User Registerd Before")
+                    print("[- Gabim , Useri U Regjistrua me Pare -]")
 
         
         elif komanda[0:11].upper() == "DELETE-USER":
@@ -118,13 +118,7 @@ def main():
             else:
                 return False
 
-            """
-            for row in records:
-                print("Id = ", row[0], )
-                print("Name = ", row[1])
-                print("Price  = ", row[2])
-                print("Purchase date  = ", row[3], "\n")
-            """
+
 
         except Error as e:
             return False
