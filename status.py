@@ -70,7 +70,7 @@ if res[0]:
         if public:
 
             sign_data = jwt.decode(sign, public, algorithm='RS256')
-            print(sign_data)
+
             expr = sign_data['expr']
             if(expr > time()):
                 print ("User :",username)
